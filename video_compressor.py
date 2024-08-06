@@ -18,7 +18,6 @@ def compress_video():
     
     output_path = filedialog.asksaveasfilename(defaultextension=".mp4", filetypes=[("MP4 files", "*.mp4")])
     if output_path:
-        # Chercher FFmpeg dans le même répertoire que l'exécutable
         if getattr(sys, 'frozen', False):
             ffmpeg_path = os.path.join(sys._MEIPASS, 'ffmpeg.exe')
         else:
@@ -27,8 +26,6 @@ def compress_video():
         if not os.path.isfile(ffmpeg_path):
             messagebox.showerror("Error", "FFmpeg executable not found at the specified path.")
             return
-
-        # Commande FFmpeg pour compresser la vidéo avec les paramètres ajustés
         command = [
             ffmpeg_path, '-i', input_path,
             '-vcodec', 'libx264', '-crf', '32', '-preset', 'veryslow',
@@ -41,16 +38,13 @@ def compress_video():
         except subprocess.CalledProcessError as e:
             messagebox.showerror("Error", f"Compression failed: {e}")
 
-# Création de l'interface utilisateur
 root = tk.Tk()
 root.title("Video Compressor")
 root.geometry("400x250")
 root.configure(bg="#2c3e50")
 
-# Centrer la fenêtre
 root.eval('tk::PlaceWindow . center')
 
-# Styles
 style_label = {"bg": "#2c3e50", "fg": "white", "font": ("Helvetica", 12)}
 style_button = {"bg": "#2980b9", "fg": "white", "font": ("Helvetica", 10), "relief": "raised", "bd": 3}
 
